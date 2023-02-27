@@ -9,12 +9,16 @@ def index(request):
     return render(request,'index.html')
 
 def calculate(request):
-    timeIn = request.POST.get("datetime1", None).replace('T', ' ')
-    timeOut = request.POST.get("datetime2", None).replace('T', ' ')
-    strmode = str(request.POST.get("usedVehicle", None))
     rndr = {}
     strDuration = ""
     fee = 0
+    try:
+        timeIn = request.POST.get("datetime1", None).replace('T', ' ')
+        timeOut = request.POST.get("datetime2", None).replace('T', ' ')
+    except:
+        return render(request,'index.html',rndr)
+    strmode = str(request.POST.get("usedVehicle", None))
+    
     if timeIn and timeOut:
         try:
             dateTime_in = datetime.datetime.strptime(timeIn, '%Y-%m-%d %H:%M:%S')
