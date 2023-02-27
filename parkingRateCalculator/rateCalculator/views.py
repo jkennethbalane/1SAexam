@@ -34,12 +34,14 @@ def calculate(request):
             duration = dateTime_out - dateTime_in
             succedingFee = parkingFee.objects.get(mode = strmode).succeedingFee
             fee = parkingFee.objects.get(mode = strmode).fee
-            totalHours = ((duration.total_seconds()/60)/60)
+            totalHours = int((duration.total_seconds()/60)/60)
             if totalHours >= 0:
                 totalHours = totalHours-2
                 if totalHours > 0:
-                    fee = round((succedingFee*totalHours),2)
+                    fee = int(fee + (succedingFee*totalHours))
                 strDuration = str(duration)
+                if strmode == "empCar":
+                    fee = int(fee - (fee*.2))
             else:
                 fee = 0
     if fee <= 0:
