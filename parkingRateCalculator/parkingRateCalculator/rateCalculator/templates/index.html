@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Parking Fee Calculator</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+  </head>
+  <body>
+    <form action="calculate" method="POST">
+        {% csrf_token %}
+        Time In:
+        <input class= "datetime-picker" name ="datetime1" type='datetime-local' step="1"></input>
+        Time Out:
+        <input class= "datetime-picker" name ="datetime2" type='datetime-local' step="1"></input>
+        <select name="usedVehicle" id="vehicle">
+            <option value="Car">Car</option>
+            <option value="Motorcycle">Motorcycle</option>
+            <option value="empCar">Employee | Car</option>
+            <option value="empMotor">Employee | Motorcycle</option>
+        </select>
+        <input type="submit">
+    </form>
+    {% if fee != NULL %}
+      <div class="result">
+          <h1>{{fee}}</h1>
+          {{duration}}
+      </div>
+    {% endif %}
+  </body>
+</html>
